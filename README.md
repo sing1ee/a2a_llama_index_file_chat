@@ -2,6 +2,9 @@
 
 This sample demonstrates a conversational agent built with [LlamaIndex Workflows](https://docs.llamaindex.ai/en/stable/understanding/workflows/) and exposed through the A2A protocol. It showcases file upload and parsing, conversational interactions with support for multi-turn dialogue, streaming responses/updates, and in-line citations.
 
+## source code
+[a2a llama index file chat with openrouter](https://github.com/sing1ee/a2a_llama_index_file_chat)
+
 ## How It Works
 
 This agent uses LlamaIndex Workflows with OpenRouter to provide a conversational agent that can upload files, parse them, and answer questions about the content. The A2A protocol enables standardized interaction with the agent, allowing clients to send requests and receive real-time updates.
