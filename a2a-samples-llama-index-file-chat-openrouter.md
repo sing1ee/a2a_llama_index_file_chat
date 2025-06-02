@@ -1,5 +1,15 @@
+---
+title: "LlamaIndex File Chat Workflow with A2A Protocol"
+date: "2025-06-02"
+excerpt: "Learn how to build a conversational agent with file upload, parsing, and interactive chat capabilities using LlamaIndex Workflows and A2A Protocol. This tutorial covers real-time streaming, multi-turn conversations, inline citations, and integration with LlamaParse and OpenRouter."
+metadata:
+  title: "A2A Samples: LlamaIndex File Chat Agent"
+  description: "A comprehensive guide for building file chat agents using LlamaIndex Workflows and A2A Protocol. Includes detailed implementation of file upload and parsing, multi-turn conversations, real-time streaming, inline citations, LlamaParse and OpenRouter integration, and webhook notification systems. Perfect for developers looking to build advanced conversational AI agent services."
+  author: "MILO"
+  image: "/a2a-llama-index-file-chat-cover.svg"
+---
 
-# LlamaIndex File Chat Workflow with A2A Protocol
+# 
 
 This sample demonstrates a conversational agent built with [LlamaIndex Workflows](https://docs.llamaindex.ai/en/stable/understanding/workflows/) and exposed through the A2A protocol. It showcases file upload and parsing, conversational interactions with support for multi-turn dialogue, streaming responses/updates, and in-line citations.
 
