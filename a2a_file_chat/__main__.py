@@ -12,8 +12,8 @@ from a2a.types import (
     AgentCard,
     AgentSkill,
 )
-from agent_executor import LlamaIndexAgentExecutor
-from agents.llama_index_file_chat.agent import ParseAndChat
+from .agent_executor import LlamaIndexAgentExecutor
+from .agent import ParseAndChat
 from dotenv import load_dotenv
 
 

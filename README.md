@@ -58,13 +58,21 @@ sequenceDiagram
 
 ## Setup & Running
 
-1. Navigate to the samples directory:
+1. Clone and navigate to the project directory:
 
    ```bash
-   cd samples/python/agents/llama_index_file_chat
+   git clone <repository-url>
+   cd a2a_llama_index_file_chat
    ```
 
-2. Create an environment file with your API keys:
+2. Create a virtual environment and install dependencies:
+
+   ```bash
+   uv venv
+   uv sync
+   ```
+
+3. Create an environment file with your API keys:
 
    ```bash
    echo "OPENROUTER_API_KEY=your_api_key_here" >> .env
@@ -75,27 +83,32 @@ sequenceDiagram
    - **OpenRouter API Key**: Sign up at [https://openrouter.ai](https://openrouter.ai) to get your free API key
    - **LlamaCloud API Key**: Get one for free at [https://cloud.llamaindex.ai](https://cloud.llamaindex.ai)
 
-3. Run the agent:
+4. Run the agent:
 
    ```bash
-   # Basic run on default port 10010
-   uv run .
+   # Using uv
+   uv run a2a-file-chat
 
-   # On custom host/port
-   uv run . --host 0.0.0.0 --port 8080
+   # Or activate the virtual environment and run directly
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   python -m a2a_file_chat
+
+   # With custom host/port
+   uv run a2a-file-chat --host 0.0.0.0 --port 8080
    ```
 
-4. In a separate terminal, run an A2A [client](/samples/python/hosts/README.md):
+4. In a separate terminal, run an A2A client cli:
+
+  Download a file to parse, or link to your own file. For example:
 
    ```bash
-   cd samples/python/hosts/cli
+   curl -L https://arxiv.org/pdf/1706.03762 -o attention.pdf
+   ```
+
+   ```bash
+   git clone https://github.com/google-a2a/a2a-samples.git
+   cd a2a-samples/samples/python/hosts/cli
    uv run . --agent http://localhost:10010
-   ```
-
-   Download a file to parse, or link to your own file. For example:
-
-   ```bash
-   wget https://arxiv.org/pdf/1706.03762 -O attention.pdf
    ```
 
    And enter something like the following:

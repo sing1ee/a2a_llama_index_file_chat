@@ -1,7 +1,11 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "a2a-samples-file-chat"
+name = "a2a-file-chat"
 version = "0.1.0"
-description = "Add your description here"
+description = "LlamaIndex File Chat Agent with A2A Protocol"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -9,4 +13,14 @@ dependencies = [
     "llama-cloud-services>=0.6.12",
     "llama-index-core>=0.12.30",
     "llama-index-llms-openrouter>=0.1.0",
+    "click",
+    "httpx",
+    "python-dotenv",
+    "uvicorn",
 ]
+
+[project.scripts]
+a2a-file-chat = "a2a_file_chat.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["a2a_file_chat"]

@@ -2,7 +2,7 @@ import asyncio
 import logging
 import traceback
 
-from typing import cast
+from typing import cast, Dict, Any
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import Event, EventQueue
@@ -20,6 +20,7 @@ from a2a.types import (
 )
 from a2a.utils import are_modalities_compatible, new_agent_text_message
 from a2a.utils.errors import ServerError
+from llama_index.core.workflow import Context
 from .agent import (
     ChatResponseEvent,
     InputEvent,

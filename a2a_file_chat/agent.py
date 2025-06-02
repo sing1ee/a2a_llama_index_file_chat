@@ -1,5 +1,6 @@
 import base64
 import os
+import re
 from typing import Any, Optional
 from llama_index.core.llms import ChatMessage
 from llama_index.core.workflow import (
@@ -77,10 +78,12 @@ class ParseAndChat(Workflow):
         **workflow_kwargs: Any,
     ):
         super().__init__(timeout=timeout, verbose=verbose, **workflow_kwargs)
-        self._sllm = OpenRouter(
-            model='google/gemini-2.0-flash-exp:free', 
+        self._llm = OpenRouter(
+            model='anthropic/claude-3.5-haiku', 
+            max_tokens=10000,
             api_key=os.getenv('OPENROUTER_API_KEY')
-        ).as_structured_llm(ChatResponse)
+        )
+        self._sllm = self._llm.as_structured_llm(ChatResponse)
         self._parser = LlamaParse(api_key=os.getenv('LLAMA_CLOUD_API_KEY'))
         self._system_prompt_template = """\
 You are a helpful assistant that can answer questions about a document, provide citations, and engage in a conversation.
@@ -97,7 +100,15 @@ When citing content from the document:
 4. If a citation needs to cover multiple lines that are not sequential, a citation format like [2, 3, 4] is acceptable.
 5. For example, if the response contains "The transformer architecture... [1]." and "Attention mechanisms... [2].", and these come from lines 10-12 and 45-46 respectively, then: citations = [[10, 11, 12], [45, 46]]
 6. Always start your citations at [1] and increase by 1 for each additional in-line citation. DO NOT use the line numbers as the in-line citation numbers or I will lose my job.
+
+IMPORTANT: Return a valid JSON response only. Do not include any control characters or special formatting.
 """
+
+    def _clean_json_string(self, json_str: str) -> str:
+        """Clean control characters from JSON string to ensure valid parsing."""
+        # Remove control characters (0x00-0x1F) except for \t, \n, \r
+        cleaned = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F]', '', json_str)
+        return cleaned
 
     @step
     def route(self, ev: InputEvent) -> ParseEvent | ChatEvent:
@@ -158,8 +169,36 @@ When citing content from the document:
         else:
             input_messages = current_messages
 
-        response = await self._sllm.achat(input_messages)
-        response_obj: ChatResponse = response.raw
+        try:
+            response = await self._sllm.achat(input_messages)
+            print(response)
+            response_obj: ChatResponse = response.raw
+        except Exception as e:
+            # If structured output fails, try with regular LLM and manual parsing
+            ctx.write_event_to_stream(
+                LogEvent(msg='Structured output failed, trying fallback...')
+            )
+            try:
+                fallback_response = await self._llm.achat(input_messages)
+                raw_content = fallback_response.message.content
+                
+                # Clean the response before JSON parsing
+                cleaned_content = self._clean_json_string(raw_content)
+                
+                # Try to extract JSON from the response
+                import json
+                response_obj = ChatResponse.model_validate_json(cleaned_content)
+            except Exception as fallback_error:
+                # Final fallback: create a simple response without structured output
+                ctx.write_event_to_stream(
+                    LogEvent(msg='All parsing failed, using simple response...')
+                )
+                fallback_response = await self._llm.achat(input_messages)
+                response_obj = ChatResponse(
+                    response=fallback_response.message.content,
+                    citations=[]
+                )
+        
         ctx.write_event_to_stream(
             LogEvent(msg='LLM response received, parsing citations...')
         )
@@ -181,18 +220,19 @@ When citing content from the document:
                     end_idx = document_text.find(
                         f"<line idx='{line_number + 1}'>"
                     )
-                    citation_text = (
-                        document_text[
-                            start_idx
-                            + len(f"<line idx='{line_number}'>") : end_idx
-                        ]
-                        .replace('</line>', '')
-                        .strip()
-                    )
+                    if start_idx >= 0:
+                        citation_text = (
+                            document_text[
+                                start_idx
+                                + len(f"<line idx='{line_number}'>") : end_idx
+                            ]
+                            .replace('</line>', '')
+                            .strip()
+                        )
 
-                    if citation.citation_number not in citations:
-                        citations[citation.citation_number] = []
-                    citations[citation.citation_number].append(citation_text)
+                        if citation.citation_number not in citations:
+                            citations[citation.citation_number] = []
+                        citations[citation.citation_number].append(citation_text)
 
         return ChatResponseEvent(
             response=response_obj.response, citations=citations
