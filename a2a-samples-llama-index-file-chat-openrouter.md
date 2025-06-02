@@ -9,8 +9,6 @@ metadata:
   image: "/a2a-llama-index-file-chat-cover.svg"
 ---
 
-# 
-
 This sample demonstrates a conversational agent built with [LlamaIndex Workflows](https://docs.llamaindex.ai/en/stable/understanding/workflows/) and exposed through the A2A protocol. It showcases file upload and parsing, conversational interactions with support for multi-turn dialogue, streaming responses/updates, and in-line citations.
 
 ## source code
@@ -75,7 +73,7 @@ sequenceDiagram
 1. Clone and navigate to the project directory:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/sing1ee/a2a_llama_index_file_chat
    cd a2a_llama_index_file_chat
    ```
 

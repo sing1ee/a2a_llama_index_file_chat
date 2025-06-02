@@ -9,8 +9,6 @@ metadata:
   image: "/a2a-llama-index-file-chat-cover.svg"
 ---
 
-# 
-
 本示例展示了一个使用 [LlamaIndex Workflows](https://docs.llamaindex.ai/en/stable/understanding/workflows/) 构建并通过 A2A 协议公开的对话代理。它展示了文件上传和解析、支持多轮对话的对话交互、流式响应/更新以及内联引用。
 
 ## 源代码
@@ -75,7 +73,7 @@ sequenceDiagram
 1. 克隆并导航到项目目录：
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/sing1ee/a2a_llama_index_file_chat
    cd a2a_llama_index_file_chat
    ```
 
