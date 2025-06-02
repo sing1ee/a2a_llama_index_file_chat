@@ -4,7 +4,7 @@ This sample demonstrates a conversational agent built with [LlamaIndex Workflows
 
 ## How It Works
 
-This agent uses LlamaIndex Workflows with Google Gemini to provide a conversational agent that can upload files, parse them, and answer questions about the content. The A2A protocol enables standardized interaction with the agent, allowing clients to send requests and receive real-time updates.
+This agent uses LlamaIndex Workflows with OpenRouter to provide a conversational agent that can upload files, parse them, and answer questions about the content. The A2A protocol enables standardized interaction with the agent, allowing clients to send requests and receive real-time updates.
 
 ```mermaid
 sequenceDiagram
@@ -53,7 +53,7 @@ sequenceDiagram
 
 - Python 3.12 or higher
 - [UV](https://docs.astral.sh/uv/)
-- Access to an LLM and API Key (Current code assumes using Google Gen AI API)
+- Access to an LLM and API Key (Current code assumes using OpenRouter API)
 - A LlamaParse API key ([get one for free](https://cloud.llamaindex.ai))
 
 ## Setup & Running
@@ -67,9 +67,13 @@ sequenceDiagram
 2. Create an environment file with your API keys:
 
    ```bash
-   echo "GOOGLE_API_KEY=your_api_key_here" >> .env
+   echo "OPENROUTER_API_KEY=your_api_key_here" >> .env
    echo "LLAMA_CLOUD_API_KEY=your_api_key_here" >> .env
    ```
+
+   **Getting API Keys:**
+   - **OpenRouter API Key**: Sign up at [https://openrouter.ai](https://openrouter.ai) to get your free API key
+   - **LlamaCloud API Key**: Get one for free at [https://cloud.llamaindex.ai](https://cloud.llamaindex.ai)
 
 3. Run the agent:
 
@@ -378,4 +382,4 @@ You can see that the workflow produced an artifact with in-line citations, and t
 - [LlamaIndex Workflow Documentation](https://docs.llamaindex.ai/en/stable/understanding/workflows/)
 - [LlamaIndex Workflow Examples](https://docs.llamaindex.ai/en/stable/examples/#agentic-workflows)
 - [LlamaParse Documentation](https://github.com/run-llama/llama_cloud_services/blob/main/parse.md)
-- [Google Gemini API](https://ai.google.dev/gemini-api)
+- [OpenRouter API](https://openrouter.ai)

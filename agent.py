@@ -10,9 +10,8 @@ from llama_index.core.workflow import (
     Workflow,
     step,
 )
-from llama_index.llms.google_genai import GoogleGenAI
+from llama_index.llms.openrouter import OpenRouter
 from llama_cloud_services.parse import LlamaParse
-from llama_index.llms.google_genai import GoogleGenAI
 from pydantic import BaseModel, Field
 
 
@@ -78,8 +77,9 @@ class ParseAndChat(Workflow):
         **workflow_kwargs: Any,
     ):
         super().__init__(timeout=timeout, verbose=verbose, **workflow_kwargs)
-        self._sllm = GoogleGenAI(
-            model='gemini-2.0-flash', api_key=os.getenv('GOOGLE_API_KEY')
+        self._sllm = OpenRouter(
+            model='google/gemini-2.0-flash-exp:free', 
+            api_key=os.getenv('OPENROUTER_API_KEY')
         ).as_structured_llm(ChatResponse)
         self._parser = LlamaParse(api_key=os.getenv('LLAMA_CLOUD_API_KEY'))
         self._system_prompt_template = """\
