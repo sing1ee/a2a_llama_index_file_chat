@@ -20,7 +20,7 @@ from a2a.types import (
 )
 from a2a.utils import are_modalities_compatible, new_agent_text_message
 from a2a.utils.errors import ServerError
-from agents.llama_index_file_chat.agent import (
+from .agent import (
     ChatResponseEvent,
     InputEvent,
     LogEvent,
