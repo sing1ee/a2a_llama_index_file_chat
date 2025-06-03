@@ -408,3 +408,5 @@ stream event => {"jsonrpc":"2.0","id":"367d0ba9af97457890261ac29a0f6f5b","result
 - [LlamaIndex Workflow 예제](https://docs.llamaindex.ai/en/stable/examples/#agentic-workflows)
 - [LlamaParse 문서](https://github.com/run-llama/llama_cloud_services/blob/main/parse.md)
 - [OpenRouter API](https://openrouter.ai)
+- [LlamaIndex File Chat Agent](https://github.com/sing1ee/a2a_llama_index_file_chat)
+- [A2A Python Demo](https://a2aprotocol.ai/blog/a2a-samples-llama-index-file-chat-openrouter-ko)

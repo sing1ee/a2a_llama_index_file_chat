@@ -408,3 +408,5 @@ You can see that the workflow produced an artifact with in-line citations, and t
 - [LlamaIndex Workflow Examples](https://docs.llamaindex.ai/en/stable/examples/#agentic-workflows)
 - [LlamaParse Documentation](https://github.com/run-llama/llama_cloud_services/blob/main/parse.md)
 - [OpenRouter API](https://openrouter.ai)
+- [LlamaIndex File Chat Agent](https://github.com/sing1ee/a2a_llama_index_file_chat)
+- [A2A Python Demo](https://a2aprotocol.ai/blog/a2a-samples-llama-index-file-chat-openrouter)
